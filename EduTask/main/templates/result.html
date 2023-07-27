@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schools</title>
+  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <style>
+        .marginTop {
+        margin-top: 80px;
+      }
+      a{
+        text-decoration: none;
+      }
+      </style>
+  </head>
+<body>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <form class="d-flex marginTop" method="get" >
+        <input class="form-control me-2" type="search" placeholder="Enter PIN number" aria-label="Search" name ="pincode" id="pincode" required pattern="^[1-9]{1}[0-9]{5}">
+        <button class="btn btn-outline-success" type="submit"> Schools</button>
+      </form>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      {% if sorted_schools %}
+        <h3 class="text-center marginTop"> All Schools with PIN <span class="text-danger">{{pincode}}</span></h3>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <table class="table  ">
+            <thead class="table-dark ">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Pincode</th>
+                <th scope="col">Distance</th>
+              </tr>
+            </thead>
+            {% for school in sorted_schools %}
+            <tbody>
+              <tr>
+                <td>{{school.school_name}}</td>
+                <td>{{school.school_address}}</td>
+                <td>{{school.school_pincode}}</td>
+                <td>{{school.distance}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    {% endif %}
+  </div>
+  
+  <div class="col-md-1"></div>
+  </div>
+
+<div class="pagination justify-content-center">
+    <span class="step-links">
+        {% if sorted_schools.has_previous %}
+            <a href="?page=1&pincode={{pincode}}" class="h5 text-success">&laquo; First</a>
+            <a href="?page={{ sorted_schools.previous_page_number }}&pincode={{pincode}}" class="h5">Previous</a>
+        {% endif %}
+
+        <span class="current-page h3">{{ sorted_schools.number }}</span>
+
+        {% if sorted_schools.has_next %}
+            <a href="?page={{ sorted_schools.next_page_number }}&pincode={{pincode}}" class="h5">Next</a>
+            <a href="?page={{ sorted_schools.paginator.num_pages }}&pincode={{pincode}}" class="h5 text-success">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
+</body>
+</html>
+
+
